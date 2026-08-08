@@ -1,0 +1,66 @@
+# {{PROJECT_NAME}} — Backend Reference
+
+API surface, schema, and operational notes as actually served by the running prototype.
+Companion docs: `ARCHITECTURE.md`, `CONNECTIONS.md`, `HANDOVER.md`[, `{{KB_DOC_NAME}}.md`].
+
+Status date: {{DATE}}, measured on the running prototype (commit `{{COMMIT_SHA}}`).
+
+## Stack & layout
+
+| | |
+|---|---|
+| Runtime | {{e.g. Node 20, Express 5}} |
+| DB | {{e.g. SQLite WAL mode, FK cascades on}} |
+| Frontend | {{e.g. Vanilla-JS SPA, hash routing, no build step}} |
+| Core code | {{line-count table or summary — measure it, don't guess}} |
+| HTTP surface | {{n}} endpoints |
+| Schema | {{n}} tables/collections |
+| Dependencies | {{n}} production deps, {{vulnerability scan status}} |
+
+```
+{{Directory tree with one-line comments per file/directory — the map a new contributor needs.}}
+```
+
+## Data model
+
+{{Schema diagram or table. If there's a cascade-delete pattern or other structural convention
+worth calling out (see `HANDOFF-FORMAT.md`'s "the repo is the source of truth" reasoning for why
+teardown-path clarity matters), state it explicitly here.}}
+
+Notable choices:
+- {{Any schema decision that isn't self-explanatory from the column names — why a field is
+  free-form JSON instead of typed columns, why something is nullable, etc.}}
+
+## REST API (or equivalent interface reference)
+
+{{State the auth/gating convention once here rather than repeating it per-endpoint: which routes
+require auth, what the gating mechanism is, what an unauthenticated/unauthorized request returns.}}
+
+### {{Resource group name}}
+| Method | Path | Gate | Body / Params | Response |
+|---|---|---|---|---|
+| {{GET/POST/etc}} | {{/path}} | {{auth requirement}} | {{shape}} | {{shape, incl. error cases}} |
+
+Repeat per resource group.
+
+## Auth & session (if applicable)
+
+{{How sessions/tokens work, how passwords or credentials are handled, any deliberately-simulated-
+vs-real distinction (see `CONNECTIONS.md`) worth flagging here too since it affects the API
+contract.}}
+
+## Audit-log coverage
+
+{{What's actually captured (which actions, by whom, when) vs. what isn't. Be honest about gaps —
+see `HANDOFF-FORMAT.md`'s guidance on this being explicitly worth documenting rather than
+silently shipping partial coverage.}}
+
+| Table/log | Captures | Does not capture |
+|---|---|---|
+| {{name}} | {{fields/events}} | {{gaps}} |
+
+## Known limitations (recorded for the next builder)
+
+{{Rate limiting, guard rails not yet added, pagination not yet added, anything accepted as a
+prototype-scale tradeoff that a production build needs to revisit. One bullet per limitation,
+with enough context that the "why it's fine for now" is clear.}}

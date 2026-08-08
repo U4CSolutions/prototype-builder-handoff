@@ -1,0 +1,44 @@
+# {{PROJECT_NAME}} prototype — project instructions
+
+{{ONE_LINE_DESCRIPTION}}. Lives at `{{PROJECT_PATH}}`. See the workspace-level instructions file
+first for the shared framework and skills — this file only covers what's specific to
+{{PROJECT_NAME}}.
+
+## Run / deploy
+- Service: `{{restart command}}` (port `{{PORT}}`{{, standing/dedicated — not part of the shared
+  rotation, if applicable}}). {{Build step, if any.}}
+- Smoke gate before restart: `{{syntax-check command}}` every touched file.
+- Stack: {{list — see STACK-DEFAULTS.md for the default this deviates from, if it does}}.
+  {{Note any deviation from the shared default stack here, and why.}}
+
+## Working rules
+1. **Iterate with the `proto-iterate` pattern**: patch with pattern-miss detection →
+   syntax-check → restart → verify. Never report a UI change without browser verification.
+2. **Verify with the `proto-verify` pattern**: screenshots (read them), overflow audit at the
+   smallest supported viewport, JS-error capture, every theme.
+3. **Audit contrast with the `wcag-audit` pattern** after any styling change — WCAG 2.2 AA,
+   every theme, programmatic (never eyeball).
+4. **Demo data via `{{seed script name}}`**: {{describe the teardown mechanism — ideally one
+   root entity whose deletion cascades everything, per `HANDOFF-FORMAT.md`/
+   `REPO-AS-SOURCE-OF-TRUTH.md` guidance on keeping the teardown path singular and simple.}}
+5. **Docs move with code**: contract or behavior changes update `docs/HANDOVER.md`,
+   `docs/BACKEND.md`, `docs/CONNECTIONS.md`, `docs/ARCHITECTURE.md`[, `docs/{{KB_DOC_NAME}}.md`]
+   in the same session — see the `prototype-handover` pattern. {{If this repo is meant to be a
+   source of truth for a separate build system, say so explicitly here.}}
+6. {{Real-vs-demo data rule, if this prototype ever holds real, non-demo user data.}}
+7. {{Any other project-specific conventions.}}
+
+## Load-bearing technical decisions (do not regress)
+{{Fill in as they're discovered — gotchas, frozen API contracts, anything a future edit could
+accidentally undo. Empty at scaffold time; that's expected. This section is the highest-value
+one to keep current — it's where the *why* behind non-obvious decisions lives, per
+METHODOLOGY.md principle 6.}}
+
+## Handover / source-of-truth docs
+`docs/` is {{a complete handover package / not yet written — see prototype-handover}}, kept in
+lockstep with the code (rule #5 above).{{ If applicable: This repo, commit history included, is
+meant to be pullable by a separate build system as the authoritative source of truth — don't let
+docs/ drift from what the running prototype actually does.}}
+
+## Key files
+{{Fill in as the project grows — entrypoint, schema file, frontend entry point, key modules.}}

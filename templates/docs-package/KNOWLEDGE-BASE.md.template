@@ -1,0 +1,45 @@
+# {{PROJECT_NAME}} — {{Topic}} Reference
+
+Standalone reference for {{the one piece of logic that's disproportionately easy to get subtly
+wrong in a rebuild}} — written so a new contributor or a build system can understand and
+correctly extend it without cross-referencing several other files. See `HANDOFF-FORMAT.md`'s
+"the extension slot" for when a topic deserves this treatment rather than living as a subsection
+of `BACKEND.md`.
+
+Use this template loosely — the whole point of a knowledge-base doc is that its shape follows
+the logic it's documenting, not a fixed format. The structure below is a reasonable starting
+skeleton, not a mold to force everything into.
+
+## The core model / rule
+
+{{State the actual mechanism precisely — the thing someone must understand correctly before
+touching this code. If there's more than one independent axis/dimension to the logic (e.g. two
+separate access-control mechanisms that combine, or a state machine with more than one kind of
+transition), name each axis explicitly and state that they're independent — conflating
+independent axes is usually *the* mistake this document exists to prevent.}}
+
+## How it's enforced / where it lives
+
+{{Point at the actual code — function names, file paths — and state which of those is the *real*
+enforcement point (server-side, source-of-truth) versus a derived/cosmetic mirror of it
+(client-side UI hiding, a cache, a denormalized copy) that must stay in sync but isn't itself
+authoritative.}}
+
+## Worked examples
+
+{{A table or a few concrete walked-through scenarios showing the model in action, including at
+least one example that exercises the interaction between axes/dimensions if there's more than
+one — this is usually the fastest way for a reader to build correct intuition.}}
+
+## Known gaps
+
+{{Any place the current implementation doesn't fully enforce the model as stated — a feature
+that's declared/scaffolded but not yet wired into an enforcement point, an edge case a future
+feature could accidentally violate if built carelessly. Naming these explicitly is more valuable
+than it looks: it's exactly the kind of thing that's easy to introduce as a regression precisely
+*because* it currently works by accident rather than by an enforced rule.}}
+
+## What a rebuild must preserve
+
+{{The short, precise list — often 3-5 bullets — of the actual invariants a rebuild must not
+violate, distinct from the specific code structure (which is free to change).}}

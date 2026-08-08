@@ -1,0 +1,70 @@
+# {{PROJECT_NAME}} — Build Architecture
+
+Target architecture for taking the prototype to production. Written for a spec-driven build
+system: the prototype is the behavioral reference; contracts are frozen (cross-reference the
+other docs), internals are rebuildable. Companion docs: `BACKEND.md`, `CONNECTIONS.md`,
+`HANDOVER.md`[, `{{KB_DOC_NAME}}.md`].
+
+Status date: {{DATE}}, measured on the running prototype.
+
+## 1. Current state assessment (measured)
+
+| Metric | Value |
+|---|---|
+| Core code | {{measured, not estimated}} |
+| HTTP surface | {{n}} endpoints |
+| Schema | {{n}} tables/collections |
+| Dependencies | {{n}} deps, {{vuln-scan status}} |
+| Deployment | {{how it runs today}} |
+
+**Production-ready as-is**: {{list what genuinely doesn't need to change.}}
+
+**Prototype-only (the production gap)**:
+
+| Component | Today | Required for production |
+|---|---|---|
+| {{component}} | {{simulated/simplified state}} | {{what real looks like}} |
+
+## 2. Target architecture (production)
+
+{{Diagram or description. State explicitly whether to keep a monolith or split into services,
+and why — see `STACK-DEFAULTS.md`'s reasoning for "match the deployment model to the actual
+product" rather than defaulting to a generic "cloud native" answer.}}
+
+## 3. Frontend requirements
+
+1. {{Whether to keep the prototype's frontend approach or rebuild it, and the conditions under
+   which each choice makes sense.}}
+2. **Frozen contracts**: {{route map, any UI-level API surface, any explicit product requirement
+   like "this feature must never appear in primary navigation" — capture these precisely, since
+   they're easy to accidentally regress in a rebuild that "improves" the UI.}}
+3. {{Accessibility/responsiveness requirements carried forward from HANDOVER.md §5.}}
+
+## 4. Backend requirements
+
+1. {{Auth/session hardening needed for production, if the prototype used simplified auth.}}
+2. {{Integration adapters needed — cross-reference CONNECTIONS.md.}}
+3. {{Audit-log gap, if any — cross-reference BACKEND.md.}}
+4. {{Config/secrets management for production vs. prototype-grade file-based secrets.}}
+5. {{Migration strategy if the schema needs to evolve in a coordinated, versioned way.}}
+
+## 5. Hosting / deployment requirements
+
+{{Sizing table, hosting recommendation, and reasoning — match to what the product actually is
+(a self-hosted single-instance tool vs. a multi-tenant SaaS have very different right answers
+here; don't default to one without thinking about which this product actually is).}}
+
+## 6. CI/CD pipeline
+
+{{What's needed to make this repo's "source of truth" claim (see `REPO-AS-SOURCE-OF-TRUTH.md`)
+enforceable rather than aspirational: pipeline stages, what's blocking vs. advisory, how release/
+deploy actually happens for this specific kind of product.}}
+
+## 7. Security hardening checklist (before production)
+
+- [ ] {{item}}
+
+## 8. What the spec-driven builder must NOT change
+
+{{The frozen-contracts list, gathered from every other doc in this package — the single most
+important section for a rebuild to read first.}}

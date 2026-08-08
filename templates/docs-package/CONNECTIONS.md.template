@@ -1,0 +1,46 @@
+# {{PROJECT_NAME}} — External Connections Reference
+
+Every external integration point: what's real today, what's simulated, and what a rebuild needs
+to wire up to make each one real. Companion docs: `ARCHITECTURE.md`, `BACKEND.md`,
+`HANDOVER.md`[, `{{KB_DOC_NAME}}.md`].
+
+Repeat the block below per integration. Order real integrations first, then simulated ones, then
+the "explicitly not present" list — a reader should be able to tell at a glance what actually
+works today without reading every section.
+
+## Connection {{n}}: {{Integration name}} ({{real | simulated — reference/demo only}})
+
+{{One sentence stating plainly whether this is real or simulated, and why — don't bury the lede.}}
+
+### Architecture
+{{How it's wired: which module owns it, what triggers it, what it writes/reads.}}
+
+### {{If real}} The platform/operational constraint to know about
+{{Any hard constraint that isn't a bug and can't be "fixed" in code — e.g. a browser API
+requiring a secure context, a rate limit, a credential scope requirement. State it clearly so
+nobody wastes time trying to fix the unfixable.}}
+
+### {{If simulated}} What a real integration would need
+1. {{Concrete requirement 1 — an endpoint, a credential, a translation layer between this app's
+   internal model and the external system's model.}}
+2. {{...}}
+
+**No credentials or endpoint config exist for this yet** — {{note the adapter-module pattern:
+a small module owning all outbound calls/credentials for this integration, keeping the
+demo-mode path as a clean, still-exercised fallback rather than dead code once the real
+integration exists. See `METHODOLOGY.md` principle 4.}}
+
+---
+
+## Connections explicitly NOT present
+
+{{A short, honest list — no email, no third-party auth, no analytics, whatever genuinely isn't
+there. This list is as useful to a rebuild as the "what's real" sections above.}}
+
+## Adding a new connection — checklist
+
+Match the adapter-module pattern used above: a module that owns all outbound calls/credentials
+for the connection, a demo-mode default when no config is present, never an inline fetch/SDK call
+scattered directly into route/handler files. Document the new connection here in the same session
+it's added — what triggers it, the request/response shape, the demo-mode fallback behavior, and
+any constraint a future operator needs to know before it breaks silently in production.

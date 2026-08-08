@@ -1,0 +1,34 @@
+# {{PROJECT_NAME}}
+
+{{ONE_LINE_DESCRIPTION}}. See `CLAUDE.md` (or your harness's equivalent instructions file) for
+working rules. Full handover/source-of-truth documentation lives in `docs/` — see
+`docs/HANDOVER.md` first.
+
+{{If applicable: Runs on port {{PORT}} as a standing, always-on service — not part of the shared
+rotating dev-port slot, so it stays up while other prototypes are developed independently.}}
+
+## Setup
+
+```
+{{install command}}
+{{deploy/service-install commands}}
+```
+
+Or run it directly without the service: `{{direct-run command}}`.
+
+Real data is gitignored (`{{data dir}}`, or equivalent) — created fresh on first run and never
+committed, so real user data never ends up in this repo.
+
+## Demo data
+
+Seed: `{{seed command}}`. Clear: `{{clear command}}`.
+
+Demo accounts (if applicable), all password `{{demo password}}`:
+
+| Username | Role | Notes |
+|---|---|---|
+| `{{username}}` | {{role}} | {{notes}} |
+
+## {{Any other real (non-simulated) integration worth calling out}}
+
+{{Brief note + pointer to docs/CONNECTIONS.md for the full writeup.}}

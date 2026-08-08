@@ -1,0 +1,83 @@
+# {{PROJECT_NAME}} — Build Handover Specification
+
+Master build document: scope, module specs with user stories + acceptance criteria, NFRs, test
+matrix, build-suite requirements, parity checklist. The prototype ({{REPO_URL}}) is the living,
+verified reference — every acceptance criterion below should be checked against the running app,
+not written speculatively. Companion docs: `ARCHITECTURE.md` (target build architecture),
+`BACKEND.md` (API/schema), `CONNECTIONS.md` (integrations)[, `{{KB_DOC_NAME}}.md` ({{KB_DOC_TOPIC}})].
+
+Status date: {{DATE}}.
+
+## 1. Product definition
+
+{{One paragraph: what this product is, for whom, what problem it solves.}}
+
+### {{Load-bearing philosophy name}} (load-bearing product rule)
+{{Any core philosophy that shapes everything else — a tier model, a permission model, a UX
+principle. Skip this subsection entirely if there isn't one; don't force it.}}
+
+**Explicit non-goals for this version**: {{what was deliberately left out or simulated, and
+why — distinguish "not built yet" from "simulated by design."}}
+
+## 2. Target architecture (prescriptive for rebuild)
+
+See `ARCHITECTURE.md` for full detail. Summary: {{one or two sentences}}.
+
+## 3. Domain model
+
+{{Entity relationship summary — a diagram or table. See `BACKEND.md` for the full schema.}}
+
+## 4. Module specifications (user stories + acceptance criteria)
+
+Repeat this block per feature area. Acceptance criteria should be things that were actually
+verified against the running prototype (state how — puppeteer, curl, manual — in a parenthetical),
+not aspirational.
+
+### 4.{{n}} {{Feature area name}}
+**As** {{a type of user}}, **I want** {{a capability}} **so that** {{the value it provides}}.
+
+- AC1: Given {{precondition}}, when {{action}}, then {{observable result}}. *(Verified: {{how}}.)*
+- AC2: ...
+
+## 5. Non-functional requirements (invariants)
+
+- {{Accessibility bar, e.g. "WCAG 2.2 AA on every screen, every theme, verified programmatically."}}
+- {{Any "no native platform controls" / custom-UI rule, if applicable.}}
+- {{Responsiveness/overflow requirements, including the smallest-content-state check — see the
+  `proto-verify` skill's "smallest-content-state trap."}}
+- {{Error-budget / zero-JS-error requirement, and how it's verified.}}
+- {{Statement that server-side authorization is the real gate, client-side hiding is cosmetic —
+  if the product has any access control at all.}}
+
+## 6. Test matrix (rebuild must automate; behaviors verified in prototype)
+
+| Behavior | Type | Verified how |
+|---|---|---|
+| {{behavior}} | {{unit/integration/E2E/programmatic}} | {{tool/method}} |
+
+A rebuild should turn each row into an automated CI check rather than a manual re-verification
+step.
+
+## 7. Build-suite requirements for the target harness
+
+- **Smoke gate**: {{e.g. `node --check` / your language's syntax check}} before any deploy.
+- **E2E runner**: {{tool}} — describe the reference verification sweep pattern used during
+  prototyping so it can be formalized into CI.
+- **Contrast/accessibility gate**, if applicable: {{tool/method}}, blocking in CI.
+- **Linter/type layer**: {{adopted or not; recommendation if not}}.
+- **Unit tests**: {{highest-value first targets — usually the most load-bearing, easiest-to-
+  subtly-break logic, e.g. permission/access-control code}}.
+
+## 8. Parity checklist before sign-off
+
+- [ ] {{Checklist item derived from §4/§5 — one per critical behavior}}
+- [ ] Demo/seed data reproduces identically on a fresh seed run (deterministic, not wall-clock-
+      timestamp-dependent)
+- [ ] `docs/` package updated in the same session as any behavior change that would make an AC
+      above stale
+
+## 9. Known gaps / open questions for the rebuild
+
+{{An honest list. Every real prototype has some — a missing guard rail, an unaudited action path,
+a scaling limitation accepted at prototype scale. List them here rather than letting a rebuild
+discover them the hard way.}}
