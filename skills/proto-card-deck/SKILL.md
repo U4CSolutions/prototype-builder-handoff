@@ -67,3 +67,13 @@ switches on the container class. Keep peek offsets SMALL (±1.55/2.6rem like the
 oversized offsets push transformed boxes past the area and reintroduce page scrollWidth even
 under `overflow: clip`. Stepping advances the pair by one, looped; tap either front card to
 fire its action.
+
+### Pair-mode extras (scene-deck pattern)
+
+- **Permanent stack depth**: four decorative `.deck-underlay` layers (two per side, mirrored
+  transforms, `pointer-events: none`) guarantee the stacked look regardless of card count —
+  real peeked cards render above them at matching offsets.
+- **Create slot**: when only ONE real card exists, render a synthetic front-right card (dashed
+  face, its own `data-action`) so the pair is always full — e.g. a "New scene" card that opens
+  the create flow. It participates in the loop like any card; hold/tap handlers must filter by
+  their own `data-action`.
