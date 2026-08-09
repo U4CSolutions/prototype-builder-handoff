@@ -47,3 +47,15 @@ Set realistic expectations for seed time once external fetches (stock photos, et
 reasonably take tens of seconds. Keep the seed operation's own request/response synchronous and
 simple; show a progress/loading state in the UI rather than trying to make the seed itself
 instant.
+
+## The seed IS the behavioral fixture (lockstep rule)
+
+The live demo database is how behavior gets tested and handed off — a stale seed hands the
+builder obsolete behavior. Whenever product SEMANTICS change (not just schema), update
+`demo-seed.js` in the same session so a fresh `clear + seed` demonstrates the current rules
+out of the box (e.g. when scenes became full-coverage steady states, the seeded scenes had to
+become full-coverage too — otherwise every fresh install reproduced the already-fixed
+"partial scene" behavior). Verify by actually running the clear + seed cycle and asserting the
+new behavior against the freshly seeded data. When the live DB holds real user-created rows
+worth keeping (their scenes, themes, push subscriptions), capture them BY NAME before the
+clear and re-insert with remapped ids after the seed — ids change, names survive.
