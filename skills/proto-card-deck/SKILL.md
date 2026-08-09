@@ -78,10 +78,9 @@ fire its action.
   the create flow. It participates in the loop like any card; hold/tap handlers must filter by
   their own `data-action`.
 
-### Looping vs clamped
+### Looping
 
-Single-front decks LOOP (the original spec: swipe cycles endlessly). PAIR decks DO NOT loop —
-`pairDeckClassFor` uses linear (non-circular) distances and `stepStack` clamps the index to
-`[0, n-2]`, so both directions dead-end at the first/last pair and wrap-pairs like
-[last, first] never exist. Clamp in `layoutDeck` too (the index may be stale when cards are
-added/removed).
+Both deck modes LOOP (swipe cycles endlessly in either direction; pair mode wraps through the
+[last, first] pair). If a product ever wants clamped ends instead, clamp the index in BOTH
+`stepStack` and `layoutDeck` (stale indices survive card add/remove) and switch the class
+mapping to linear distances — but looping is the default spec.
