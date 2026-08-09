@@ -52,6 +52,11 @@ const swipe = async (x1, y1, x2, y2) => {
 ```
 
 Gesture caveats discovered the hard way:
+- **Range sliders never fire `click` on a touch DRAG** — commit handlers riding the click
+  event work with a mouse (release fires click) but silently never run for finger drags, so
+  the app looks live while nothing saves. Commit on `change` (fires on release for both mouse
+  and touch), and test sliders with real CDP touch drags — synthetic `.click()`/mouse-drag
+  tests all pass while the phone is broken.
 - A browser may fire **touchcancel** (not touchend) when native scroll consumes a vertical drag.
 - Browsers synthesize a **ghost click** after a touch sequence — an app-side fix is a
   capture-phase click suppressor armed by recognized swipes.
