@@ -41,6 +41,7 @@ skills/
   proto-verify/                 Headless-browser verification: screenshots, overflow, gestures, JS errors
   wcag-audit/                   Programmatic WCAG 2.2 AA contrast auditing
   demo-data-factory/            Deterministic, realistic, labeled synthetic data patterns
+  proto-crud-states/            CRUD state discipline: serialization, gestures, selection, isolation tests
   prototype-handover/           Generating and maintaining the handoff package itself
 ```
 
