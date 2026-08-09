@@ -91,4 +91,7 @@ During (and after) a step, the INCOMING side rides on top: sliding left (forward
 right front card above the left (`.step-fwd .dk0b { z-index: 6 }`); sliding right (back) puts
 the left above the right (`.step-back .dk0a`). Set the direction class on the container in
 `stepStack` BEFORE `layoutDeck` runs so the crossing animation carries the right z-order —
-container classes survive layoutDeck's card-level className resets.
+container classes survive layoutDeck's card-level className resets. ALSO toggle the class
+live in the drag handler from the finger's current `dx` sign (updating if the finger
+reverses mid-gesture) — commit-time-only classes leave the overlap stale from the previous
+swipe while the user is still dragging.
