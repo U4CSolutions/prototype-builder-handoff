@@ -55,3 +55,15 @@ browse" surface — don't reinvent carousels. Reference implementation:
   scope**, not in a closure over the deck element — the hold's own refresh swaps the element
   and a closure-scoped swallow dies with it, letting the synthesized click fire the tap action.
 - Keyboard: cards are divs — wire Enter/Space explicitly for `[role=button]`/`[role=link]`.
+
+## Pair mode (`deck-pair`)
+
+Add the `deck-pair` class to the `.stacked` container to show TWO front cards side by side
+(`dk0 dk0a` left, `dk0 dk0b` right — both interactive/non-inert), with the under-stack peeks
+MIRRORED at both edges (same transform magnitudes each side; with 4 cards the split is
+perfectly symmetric). `pairDeckClassFor(i, active, n)` maps circular distance → position
+(`d=0/1` fronts, `d=2`→right peek, `d=n-1`→left peek, deeper pairs behind); `layoutDeck`
+switches on the container class. Keep peek offsets SMALL (±1.55/2.6rem like the single deck) —
+oversized offsets push transformed boxes past the area and reintroduce page scrollWidth even
+under `overflow: clip`. Stepping advances the pair by one, looped; tap either front card to
+fire its action.
