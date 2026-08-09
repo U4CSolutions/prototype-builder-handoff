@@ -65,7 +65,7 @@ perfectly symmetric). `pairDeckClassFor(i, active, n)` maps circular distance �
 (`d=0/1` fronts, `d=2`→right peek, `d=n-1`→left peek, deeper pairs behind); `layoutDeck`
 switches on the container class. Keep peek offsets SMALL (±1.55/2.6rem like the single deck) —
 oversized offsets push transformed boxes past the area and reintroduce page scrollWidth even
-under `overflow: clip`. Stepping advances the pair by one, looped; tap either front card to
+under `overflow: clip`. Stepping advances the pair by one; tap either front card to
 fire its action.
 
 ### Pair-mode extras (scene-deck pattern)
@@ -77,3 +77,11 @@ fire its action.
   face, its own `data-action`) so the pair is always full — e.g. a "New scene" card that opens
   the create flow. It participates in the loop like any card; hold/tap handlers must filter by
   their own `data-action`.
+
+### Looping vs clamped
+
+Single-front decks LOOP (the original spec: swipe cycles endlessly). PAIR decks DO NOT loop —
+`pairDeckClassFor` uses linear (non-circular) distances and `stepStack` clamps the index to
+`[0, n-2]`, so both directions dead-end at the first/last pair and wrap-pairs like
+[last, first] never exist. Clamp in `layoutDeck` too (the index may be stale when cards are
+added/removed).
