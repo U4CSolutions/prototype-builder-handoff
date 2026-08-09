@@ -84,3 +84,11 @@ Both deck modes LOOP (swipe cycles endlessly in either direction; pair mode wrap
 [last, first] pair). If a product ever wants clamped ends instead, clamp the index in BOTH
 `stepStack` and `layoutDeck` (stale indices survive card add/remove) and switch the class
 mapping to linear distances — but looping is the default spec.
+
+### Directional overlap (pair mode)
+
+During (and after) a step, the INCOMING side rides on top: sliding left (forward) puts the
+right front card above the left (`.step-fwd .dk0b { z-index: 6 }`); sliding right (back) puts
+the left above the right (`.step-back .dk0a`). Set the direction class on the container in
+`stepStack` BEFORE `layoutDeck` runs so the crossing animation carries the right z-order —
+container classes survive layoutDeck's card-level className resets.
