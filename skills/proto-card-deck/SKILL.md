@@ -38,6 +38,7 @@ browse" surface — don't reinvent carousels. Reference implementation:
    (horizontal drags must not trigger history nav); multi-touch aborts the drag (never break
    pinch-zoom); `|dx| > 2|dy|` intent test; ghost-click suppression for ~450ms after a
    recognized swipe (browsers synthesize a click after touch sequences).
+5.5 (gesture) **Deck surfaces are `user-select: none` + `-webkit-touch-callout: none`** — a hold on card text otherwise selects the label and fires Android's dictionary popup mid-gesture.
 5. **Card bodies are scroll containers ONLY when they measurably overflow** (`.scrollable` via
    `measureDeckBodies`) — an empty scroll container is a chaining boundary that traps page
    scroll. Re-measure on resize AND on theme metric changes (root font-size), not just once.
