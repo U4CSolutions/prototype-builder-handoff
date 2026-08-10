@@ -43,6 +43,7 @@ skills/
   demo-data-factory/            Deterministic, realistic, labeled synthetic data patterns
   proto-crud-states/            CRUD state discipline: serialization, gestures, selection, isolation tests
   proto-card-deck/              The reusable card-stack UI component: markup contract + gesture invariants
+  proto-app-back/               App-style Android back button: modal history stack + scroll memory
   prototype-handover/           Generating and maintaining the handoff package itself
 ```
 
