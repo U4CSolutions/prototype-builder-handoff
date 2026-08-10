@@ -95,3 +95,17 @@ container classes survive layoutDeck's card-level className resets. ALSO toggle 
 live in the drag handler from the finger's current `dx` sign (updating if the finger
 reverses mid-gesture) — commit-time-only classes leave the overlap stale from the previous
 swipe while the user is still dragging.
+
+### Drag offsets COMPOSE with slot transforms — and QA must measure mid-drag
+
+If a card's resting position comes from a base transform (pair-mode slots), the finger-follow
+must COMPOSE with it — set a container CSS variable that every slot transform includes
+(`translateX(calc(<slot> + var(--dragx, 0px)))`) and drive `--dragx` from JS with a
+`.dragging` class disabling transitions. Writing an inline `transform` REPLACES the base and
+teleports the card to center the instant the drag starts — an on-device disaster that
+class/final-state assertions never catch. QA rule: assert MID-DRAG GEOMETRY (card deltas from
+their resting rects, all fronts moving together) with held CDP touch sequences, not just the
+post-release state. Full deck QA also covers: every card through the whole loop both
+directions, taps at every slot, holds at every slot with full-table isolation, edge taps,
+ghost-click suppression, vertical-scroll pass-through, two-finger no-ops, and rapid-burst
+stepping.
